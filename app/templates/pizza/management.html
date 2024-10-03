@@ -1,0 +1,44 @@
+{% extends "_base.html" %}
+
+{% block content %}
+{% if pizzas %}
+<table>
+    {% for pizza in pizzas %}
+    <tr>
+        <td>
+            <button>
+                <a href="{{ url_for('pizzas.get_pizza', id=pizza.id) }}">{{ pizza.name }} {{ pizza.price }} {{pizza.ingredients}}</a>
+            </button>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<h1>Список піцц пустий</h1>
+{% endif %}
+<form action="{{ url_for('pizzas.add_pizza') }}" method="post">
+    <p>
+        <label>Назва</label>
+        <input type="text" name="name">
+    </p>
+    <p>
+        <label>Ціна</label>
+        <input type="number" name="price">
+    </p>
+    <p>
+        <label>Інградієнти</label>
+        <input type="text" name="ingredients">
+    </p>
+    <p>
+        <label>Список піцц</label>
+        <select name="positions" id="positions" multiple>
+            {% for position in positions %}
+                <option value="{{ position.id }}">{{ position.name }}</option>
+            {% endfor %}
+        </select>
+    </p>
+    <p>
+        <button type="submit">Додати нову піццу</button>
+    </p>
+</form>
+{% endblock content %}
